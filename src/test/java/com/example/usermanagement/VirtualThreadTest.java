@@ -6,7 +6,6 @@ import org.springframework.test.context.TestPropertySource;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 
 @SpringBootTest
 @TestPropertySource(properties = {

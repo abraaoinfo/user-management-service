@@ -1,7 +1,6 @@
 package com.example.usermanagement.domain.model;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import org.jspecify.annotations.NullMarked;
@@ -10,10 +9,6 @@ import org.jspecify.annotations.Nullable;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-/**
- * User entity using modern Java patterns
- * Compatible with Java 21+ (uses records internally)
- */
 @Entity
 @Table(name = "users", indexes = {
     @Index(name = "idx_user_email", columnList = "email", unique = true),
@@ -47,10 +42,8 @@ public class User {
     @Column(nullable = false)
     private LocalDateTime updatedAt;
     
-    // Default constructor for JPA
     protected User() {}
     
-    // Constructor for creating new users
     public User(String name, String email, String cpf) {
         this.name = Objects.requireNonNull(name, "Name cannot be null");
         this.email = Objects.requireNonNull(email, "Email cannot be null");
@@ -59,12 +52,10 @@ public class User {
         this.updatedAt = LocalDateTime.now();
     }
     
-    // Factory method using record pattern
     public static User from(CreateUserRequest request) {
         return new User(request.name(), request.email(), request.cpf());
     }
     
-    // Business logic using modern Java patterns
     public void updateBasicInfo(String name, String email) {
         this.name = Objects.requireNonNull(name, "Name cannot be null");
         this.email = Objects.requireNonNull(email, "Email cannot be null");
@@ -85,7 +76,6 @@ public class User {
                address.getPostalCode().matches("\\d{8}");
     }
     
-    // Convert to record for API responses
     public UserRecord toRecord() {
         return new UserRecord(
             id, name, email, cpf, 
@@ -113,9 +103,6 @@ public class User {
         return "User{id=%d, name='%s', email='%s'}".formatted(id, name, email);
     }
     
-    /**
-     * Record for API responses - immutable and modern
-     */
     public record UserRecord(
         Long id,
         String name,
@@ -138,9 +125,6 @@ public class User {
         }
     }
     
-    /**
-     * Create user request record
-     */
     public record CreateUserRequest(
         String name,
         String email,
@@ -148,9 +132,6 @@ public class User {
         @Nullable String postalCode
     ) {}
     
-    /**
-     * Update user request record
-     */
     public record UpdateUserRequest(
         @Nullable String name,
         @Nullable String email,

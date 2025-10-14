@@ -15,10 +15,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
-/**
- * OpenAPI/Swagger interface for User Management API
- * Demonstrates modern Java 25 + Spring Boot 4 API documentation
- */
 @Tag(
     name = "User Management", 
     description = "API for managing users with address validation via ViaCEP",
@@ -35,7 +31,6 @@ public interface UserApi {
             Creates a new user in the system. If a postal code (CEP) is provided, 
             the system will automatically enrich the user's address using the ViaCEP API.
             
-            **Features:**
             - Automatic address validation via ViaCEP
             - Email and CPF uniqueness validation
             - Virtual threads for high concurrency
@@ -138,7 +133,6 @@ public interface UserApi {
         description = """
             Retrieves a specific user by their unique identifier.
             
-            **Features:**
             - Fast lookup by primary key
             - Virtual threads for concurrent access
             - Null-safety guaranteed
@@ -190,7 +184,6 @@ public interface UserApi {
         description = """
             Retrieves a paginated list of all users in the system.
             
-            **Features:**
             - Pagination support for large datasets
             - Sorting capabilities
             - Virtual threads for high performance
@@ -222,7 +215,6 @@ public interface UserApi {
             Updates an existing user's information. If a new postal code is provided,
             the address will be automatically updated using the ViaCEP API.
             
-            **Features:**
             - Partial updates supported
             - Automatic address enrichment
             - Email/CPF uniqueness validation
@@ -274,7 +266,6 @@ public interface UserApi {
         description = """
             Permanently deletes a user from the system.
             
-            **Features:**
             - Cascade delete for related data
             - Virtual threads for concurrent operations
             - Immediate response (204 No Content)
@@ -305,7 +296,6 @@ public interface UserApi {
         description = """
             Retrieves statistics about users in the system.
             
-            **Features:**
             - Real-time statistics
             - Address completion metrics
             - Virtual threads for fast aggregation
@@ -335,9 +325,6 @@ public interface UserApi {
     })
     ResponseEntity<UserStats> getUserStats();
 
-    /**
-     * User statistics record for API responses
-     */
     @Schema(description = "User statistics information")
     record UserStats(
         @Schema(description = "Total number of users", example = "150")

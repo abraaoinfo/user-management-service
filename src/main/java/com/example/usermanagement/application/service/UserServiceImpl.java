@@ -5,8 +5,8 @@ import com.example.usermanagement.domain.repository.UserRepository;
 import com.example.usermanagement.domain.service.UserService;
 import com.example.usermanagement.infrastructure.client.ViaCepClient;
 import com.example.usermanagement.infrastructure.web.UserApi;
-import org.jspecify.annotations.NullMarked;
 import io.micrometer.observation.annotation.Observed;
+import org.jspecify.annotations.NullMarked;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -124,7 +124,6 @@ public class UserServiceImpl implements UserService {
         Objects.requireNonNull(postalCode);
 
         return userRepository.findById(userId).map(user -> {
-            // síncrono (virtual threads do Boot 4 já dão conta)
             viaCepClient.createAddressFromPostalCode(postalCode).ifPresent(user::updateAddress);
             return userRepository.save(user).toRecord();
         });

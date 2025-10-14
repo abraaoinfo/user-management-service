@@ -8,10 +8,6 @@ import org.jspecify.annotations.Nullable;
 
 import java.util.Objects;
 
-/**
- * Address entity using modern Java patterns
- * Compatible with Java 21+ (uses records internally)
- */
 @Entity
 @Table(name = "addresses")
 @Getter
@@ -41,10 +37,8 @@ public class Address {
     @Column(name = "complement", length = 100)
     private String complement;
     
-    // Default constructor for JPA
     protected Address() {}
     
-    // Constructor for creating new addresses
     public Address(String postalCode, @Nullable String street, @Nullable String neighborhood, 
                    @Nullable String city, @Nullable String state, @Nullable String complement) {
         this.postalCode = Objects.requireNonNull(postalCode, "Postal code cannot be null");
@@ -55,7 +49,6 @@ public class Address {
         this.complement = complement;
     }
     
-    // Factory method using record pattern
     public static Address fromViaCep(ViaCepResponse response) {
         return new Address(
             response.cep(),
@@ -67,14 +60,12 @@ public class Address {
         );
     }
     
-    // Business logic using modern Java patterns
     public boolean isComplete() {
         return postalCode != null && !postalCode.isBlank() &&
                city != null && !city.isBlank() &&
                state != null && !state.isBlank();
     }
     
-    // Convert to record for API responses
     public AddressRecord toRecord() {
         return new AddressRecord(postalCode, street, neighborhood, city, state, complement);
     }
@@ -99,9 +90,6 @@ public class Address {
         return "Address{postalCode='%s', city='%s', state='%s'}".formatted(postalCode, city, state);
     }
     
-    /**
-     * Record for API responses - immutable and modern
-     */
     public record AddressRecord(
         String postalCode,
         @Nullable String street,
@@ -122,9 +110,6 @@ public class Address {
         }
     }
     
-    /**
-     * ViaCEP API response record
-     */
     public record ViaCepResponse(
         String cep,
         @Nullable String logradouro,
